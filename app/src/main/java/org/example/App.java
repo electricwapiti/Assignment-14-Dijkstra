@@ -9,6 +9,72 @@ public class App {
     }
 
     public static void main(String[] args) {
-        System.out.println(new App().getGreeting());
+        // Example usage of Dijkstra's algorithm with AdjacencyList and BinaryHeapPriorityQueue
+        
+        System.out.println("=== Dijkstra's Algorithm with Adjacency List and Binary Heap ===\n");
+        
+        // Create a graph with 6 nodes using adjacency list representation
+        AdjacencyList graph = new AdjacencyList(6);
+        
+        // Add weighted edges
+        // 0 -> 1: weight 4
+        graph.addEdge(0, 1, 4);
+        // 0 -> 2: weight 2
+        graph.addEdge(0, 2, 2);
+        // 1 -> 2: weight 1
+        graph.addEdge(1, 2, 1);
+        // 1 -> 3: weight 5
+        graph.addEdge(1, 3, 5);
+        // 2 -> 3: weight 8
+        graph.addEdge(2, 3, 8);
+        // 2 -> 4: weight 10
+        graph.addEdge(2, 4, 10);
+        // 3 -> 4: weight 2
+        graph.addEdge(3, 4, 2);
+        // 3 -> 5: weight 6
+        graph.addEdge(3, 5, 6);
+        // 4 -> 5: weight 3
+        graph.addEdge(4, 5, 3);
+        
+        System.out.println("Graph Structure:");
+        System.out.println(graph);
+        
+        // Find shortest path from node 0 to node 5
+        double distance = Dijkstra.shortestPath(graph, 0, 5);
+        if (distance == -1) {
+            System.out.println("No path exists from node 0 to node 5");
+        } else {
+            System.out.println("Shortest path from node 0 to node 5: " + (int) distance);
+            System.out.println("  Path: 0 -> 1 -> 3 -> 4 -> 5 (4 + 5 + 2 + 3 = 14)");
+        }
+        
+        System.out.println();
+        
+        // Example with no path
+        AdjacencyList graph2 = new AdjacencyList(3);
+        graph2.addEdge(0, 1, 1);
+        // No edge from 1 or 0 to 2
+        double distance2 = Dijkstra.shortestPath(graph2, 0, 2);
+        System.out.println("Graph with disconnected node:");
+        System.out.println(graph2);
+        System.out.println("Shortest path from node 0 to node 2: " + (distance2 == -1 ? "No path exists" : (int) distance2));
+        
+        System.out.println();
+        
+        // Example demonstrating binary heap priority queue efficiency
+        System.out.println("=== Testing BinaryHeapPriorityQueue ===");
+        BinaryHeapPriorityQueue<Integer> pq = new BinaryHeapPriorityQueue<>();
+        int[] values = {5, 3, 7, 1, 9, 2, 8, 4, 6};
+        System.out.print("Inserting values: ");
+        for (int val : values) {
+            System.out.print(val + " ");
+            pq.offer(val);
+        }
+        System.out.println();
+        System.out.print("Extracting from min heap: ");
+        while (!pq.isEmpty()) {
+            System.out.print(pq.poll() + " ");
+        }
+        System.out.println();
     }
 }
